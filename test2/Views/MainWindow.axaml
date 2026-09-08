@@ -1,0 +1,132 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:test2.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="test2.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Каталог продуктов"
+        Width="1100"
+        Height="700"
+        MinWidth="900"
+        MinHeight="620">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16">
+        <Border Grid.Row="0"
+                Padding="12"
+                Margin="0,0,0,12"
+                BorderThickness="1"
+                CornerRadius="8">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                        Content="{Binding VerificationOfClear}"
+                        Command="{Binding ClearProductsCommand}" />
+                <Button Grid.Column="1"
+                        Content="Сортировка"
+                        Command="{Binding ShowSortCommand}" />
+                <Button Grid.Column="2"
+                        Content="{Binding TitleNewProduct}"
+                        Command="{Binding ShowAddProductDialogCommand}" />
+                <TextBox Grid.Column="4"
+                         Width="280"
+                         Text="{Binding SearchText}"
+                         Watermark="Поиск по названию..." />
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="1"
+                IsVisible="{Binding Isvisible}"
+                Padding="12"
+                Margin="0,0,0,12"
+                BorderThickness="1"
+                CornerRadius="8">
+            <Grid ColumnDefinitions="2*,2*,*,2*,Auto" ColumnSpacing="10">
+                <TextBox Grid.Column="0"
+                         Text="{Binding NewProductName}"
+                         Watermark="Название продукта" />
+                <TextBox Grid.Column="1"
+                         Text="{Binding NewProductCategory}"
+                         Watermark="Категория" />
+                <TextBox Grid.Column="2"
+                         Text="{Binding NewProductPrice}"
+                         Watermark="Цена" />
+                <TextBox Grid.Column="3"
+                         Text="{Binding NewProductAddress}"
+                         Watermark="Адрес" />
+                <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="10">
+                    <CheckBox IsChecked="{Binding NewProductStatus}"
+                              VerticalAlignment="Center"
+                              Content="В наличии" />
+                    <Button Command="{Binding AddProductCommand}"
+                            Content="Добавить" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2" ColumnDefinitions="3*,Auto" ColumnSpacing="12">
+            <Border Grid.Column="0"
+                    Padding="12"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                <Grid RowDefinitions="Auto,*">
+                    <Grid Grid.Row="0" ColumnDefinitions="2*,2*,*,2*,Auto" Margin="0,0,0,8">
+                        <TextBlock Grid.Column="0" Text="Название" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Text="Категория" FontWeight="Bold" />
+                        <TextBlock Grid.Column="2" Text="Цена" FontWeight="Bold" />
+                        <TextBlock Grid.Column="3" Text="Адрес" FontWeight="Bold" />
+                        <TextBlock Grid.Column="4" Text="Статус" FontWeight="Bold" />
+                    </Grid>
+
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Products}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="2*,2*,*,2*,Auto" Margin="0,4">
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Category}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Price, StringFormat='{}{0:F2}'}" />
+                                    <TextBlock Grid.Column="3" Text="{Binding Addres}" />
+                                    <TextBlock Grid.Column="4" Text="{Binding TitleOfStatus}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Border>
+
+            <Border Grid.Column="1"
+                    IsVisible="{Binding SortIsVisible}"
+                    Padding="12"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Width="220">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="Фильтр и сортировка" FontWeight="Bold" />
+                    <TextBlock Text="Категория" />
+                    <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" />
+                    <TextBlock Text="Сортировка" />
+                    <ComboBox ItemsSource="{Binding SortOptions}" SelectedItem="{Binding SelectedSort}" />
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="3" ColumnDefinitions="Auto,*,Auto" Margin="0,12,0,0">
+            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="8">
+                <Button Content="Страница 1" Command="{Binding GoPage1Command}" />
+                <Button Content="Страница 2" Command="{Binding GoPage2Command}" />
+                <Button Content="Страница 3" Command="{Binding GoPage3Command}" />
+            </StackPanel>
+
+            <ContentControl Grid.Column="2" Content="{Binding CurrentPage}" />
+        </Grid>
+    </Grid>
+</Window>
