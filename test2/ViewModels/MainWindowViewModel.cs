@@ -128,12 +128,12 @@ namespace test2.ViewModels
         {
             _allproducts = new List<Product>
             {
-                new Product { Name = "Laptop", Category = "Electronics", Price = 999.99m, Status = true, Addres = "Rd.1" , TitleOfStatus = "есть"},
-                new Product { Name = "Smartphone", Category = "Electronics", Price = 499.99m, Status = true, Addres = "Rd.2", TitleOfStatus = "есть" },
-                new Product { Name = "Table", Category = "Furniture", Price = 199.99m, Status = false, Addres = "Rd.3",TitleOfStatus = "нет"  },
-                new Product { Name = "Chair", Category = "Furniture", Price = 89.99m, Status = true, Addres = "Rd.4",TitleOfStatus = "есть"  },
-                new Product { Name = "Headphones", Category = "Electronics", Price = 199.99m , Status = false, Addres = "Rd.5",TitleOfStatus = "нет" },
-                new Product { Name = "Sofa", Category = "Furniture", Price = 899.99m, Status = true, Addres = "Rd.6", TitleOfStatus = "есть"  }
+                new Product { Id = 1,Name = "Laptop", Category = "Electronics", Price = 999.99m, Status = true, Addres = "Rd.1" , TitleOfStatus = "есть"},
+                new Product { Id = 2,Name = "Smartphone", Category = "Electronics", Price = 499.99m, Status = true, Addres = "Rd.2", TitleOfStatus = "есть" },
+                new Product { Id = 3,Name = "Table", Category = "Furniture", Price = 199.99m, Status = false, Addres = "Rd.3",TitleOfStatus = "нет"  },
+                new Product { Id = 4,Name = "Chair", Category = "Furniture", Price = 89.99m, Status = true, Addres = "Rd.4",TitleOfStatus = "есть"  },
+                new Product { Id = 5,Name = "Headphones", Category = "Electronics", Price = 199.99m , Status = false, Addres = "Rd.5",TitleOfStatus = "нет" },
+                new Product { Id = 6,Name = "Sofa", Category = "Furniture", Price = 899.99m, Status = true, Addres = "Rd.6", TitleOfStatus = "есть"  }
             };
             Products.Clear();
             foreach (var product in _allproducts)

@@ -79,23 +79,25 @@
                     BorderThickness="1"
                     CornerRadius="8">
                 <Grid RowDefinitions="Auto,*">
-                    <Grid Grid.Row="0" ColumnDefinitions="2*,2*,*,2*,Auto" Margin="0,0,0,8">
-                        <TextBlock Grid.Column="0" Text="Название" FontWeight="Bold" />
-                        <TextBlock Grid.Column="1" Text="Категория" FontWeight="Bold" />
-                        <TextBlock Grid.Column="2" Text="Цена" FontWeight="Bold" />
-                        <TextBlock Grid.Column="3" Text="Адрес" FontWeight="Bold" />
-                        <TextBlock Grid.Column="4" Text="Статус" FontWeight="Bold" />
+                    <Grid Grid.Row="0" ColumnDefinitions="0.2*,2*,*,2*,2*,Auto" Margin="0,0,0,8">
+                        <TextBlock Grid.Column="0" Text="№" FontWeight="Bold" />
+                        <TextBlock Grid.Column="1" Text="Название" FontWeight="Bold" />
+                        <TextBlock Grid.Column="2" Text="Категория" FontWeight="Bold" />
+                        <TextBlock Grid.Column="3" Text="Цена" FontWeight="Bold" />
+                        <TextBlock Grid.Column="4" Text="Адрес" FontWeight="Bold" />
+                        <TextBlock Grid.Column="5" Text="Статус" FontWeight="Bold" />
                     </Grid>
 
                     <ListBox Grid.Row="1" ItemsSource="{Binding Products}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <Grid ColumnDefinitions="2*,2*,*,2*,Auto" Margin="0,4">
-                                    <TextBlock Grid.Column="0" Text="{Binding Name}" />
-                                    <TextBlock Grid.Column="1" Text="{Binding Category}" />
-                                    <TextBlock Grid.Column="2" Text="{Binding Price, StringFormat='{}{0:F2}'}" />
-                                    <TextBlock Grid.Column="3" Text="{Binding Addres}" />
-                                    <TextBlock Grid.Column="4" Text="{Binding TitleOfStatus}" />
+                                <Grid ColumnDefinitions="0.2*,2*,*,2*,2*,Auto" Margin="0,4">
+                                    <TextBlock Grid.Column="0" Text="{Binding Id}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                                    <TextBlock Grid.Column="2" Text="{Binding Category}" />
+                                    <TextBlock Grid.Column="3" Text="{Binding Price, StringFormat='{}{0:F2}'}" />
+                                    <TextBlock Grid.Column="4" Text="{Binding Addres}" />
+                                    <TextBlock Grid.Column="5" Text="{Binding TitleOfStatus}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
