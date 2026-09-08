@@ -237,7 +237,6 @@ namespace test2.ViewModels
 
             Products.Add(newProduct);
             _allproducts.Add(newProduct);
-
             NewProductName = "";
             NewProductCategory = "";
             NewProductPrice = 0;
