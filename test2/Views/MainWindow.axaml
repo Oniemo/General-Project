@@ -40,7 +40,7 @@
                 <TextBox Grid.Column="4"
                          Width="280"
                          Text="{Binding SearchText}"
-                         Watermark="Поиск по названию..." />
+                         Watermark="Поиск по названию или ID..." />
             </Grid>
         </Border>
 
@@ -51,6 +51,7 @@
                 BorderThickness="1"
                 CornerRadius="8">
             <Grid ColumnDefinitions="2*,2*,*,2*,Auto" ColumnSpacing="10">
+
                 <TextBox Grid.Column="0"
                          Text="{Binding NewProductName}"
                          Watermark="Название продукта" />

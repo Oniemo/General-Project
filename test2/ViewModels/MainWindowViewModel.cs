@@ -31,6 +31,9 @@ namespace test2.ViewModels
         [ObservableProperty]
         private string _searchText = string.Empty;
 
+        [ObservableProperty]
+        private string _searchId;
+
         public List<string> SortOptions { get; } = new()
         {
             "Reset",
@@ -56,6 +59,11 @@ namespace test2.ViewModels
             ApplyFilters();
         }
 
+        partial void OnSearchIdChanged(string value)
+        {
+            ApplyFilters();
+        }
+
         partial void OnSearchTextChanged(string value)
         {
             ApplyFilters();
@@ -67,8 +75,16 @@ namespace test2.ViewModels
 
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                query = query.Where(p => p.Name.ToLower().Contains(SearchText.ToLower()));
+                
+                bool isIdSearch = int.TryParse(SearchText, out int idValue);
+
+                query = query.Where(p =>
+                    p.Name.ToLower().Contains(SearchText.ToLower()) ||
+                    (isIdSearch && p.Id == idValue)
+                );
             }
+
+
 
             if (SelectedCategory != "All")
             {
@@ -93,8 +109,12 @@ namespace test2.ViewModels
                 Products.Add(item);
             }
         }
+
+
         [ObservableProperty]
         private bool sortIsVisible = false;
+
+
         [RelayCommand]
         private void ShowSort()
         {
@@ -126,6 +146,7 @@ namespace test2.ViewModels
         public ObservableCollection<Product> Products { get; } = new();
         private void LoadProducts()
         {
+            _currentId = 6;
             _allproducts = new List<Product>
             {
                 new Product { Id = 1,Name = "Laptop", Category = "Electronics", Price = 999.99m, Status = true, Addres = "Rd.1" , TitleOfStatus = "есть"},
@@ -134,6 +155,7 @@ namespace test2.ViewModels
                 new Product { Id = 4,Name = "Chair", Category = "Furniture", Price = 89.99m, Status = true, Addres = "Rd.4",TitleOfStatus = "есть"  },
                 new Product { Id = 5,Name = "Headphones", Category = "Electronics", Price = 199.99m , Status = false, Addres = "Rd.5",TitleOfStatus = "нет" },
                 new Product { Id = 6,Name = "Sofa", Category = "Furniture", Price = 899.99m, Status = true, Addres = "Rd.6", TitleOfStatus = "есть"  }
+                
             };
             Products.Clear();
             foreach (var product in _allproducts)
@@ -158,6 +180,7 @@ namespace test2.ViewModels
                 VerificationOfClear = "Очистить";
                 _allproducts.Clear();
                 Products.Clear();
+                _currentId = 0;
                 Count = 0;
             }
 
@@ -193,6 +216,7 @@ namespace test2.ViewModels
 
         [ObservableProperty]
         private string newProductAddress = "";
+        
 
         [ObservableProperty]
         private string titleNewProduct = "Открыть добавление продукта";
@@ -211,6 +235,9 @@ namespace test2.ViewModels
             }
 
         }
+
+        private int _currentId;
+
         [ObservableProperty]
         private string newtitleOfStatus = "";
         [RelayCommand]
@@ -226,6 +253,7 @@ namespace test2.ViewModels
             }
             var newProduct = new Product
             {
+                Id = _currentId + 1,
                 Name = NewProductName,
                 Category = NewProductCategory,
                 Price = NewProductPrice,
@@ -237,6 +265,7 @@ namespace test2.ViewModels
 
             Products.Add(newProduct);
             _allproducts.Add(newProduct);
+            _currentId = _currentId +1;
             NewProductName = "";
             NewProductCategory = "";
             NewProductPrice = 0;
