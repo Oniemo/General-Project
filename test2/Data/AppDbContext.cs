@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using 
+using Microsoft.EntityFrameworkCore;
 using test2.Models;
 
 namespace test2.Data

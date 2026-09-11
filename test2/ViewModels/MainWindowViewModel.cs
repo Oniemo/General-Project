@@ -5,6 +5,11 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using test2.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using test2.Data;
+using test2.Models;
+
 
 namespace test2.ViewModels
 {
@@ -144,21 +149,37 @@ namespace test2.ViewModels
 
         private List<Product> _allproducts = new();
         public ObservableCollection<Product> Products { get; } = new();
-        private void LoadProducts()
+
+        [ObservableProperty]
+        private string productName = string.Empty;
+
+        [ObservableProperty]
+        private decimal productPrice;
+
+        [ObservableProperty]
+        private int productId;
+        [ObservableProperty]
+        private string productCategory = string.Empty;
+        [ObservableProperty]
+        private string productTittleOfStatus = string.Empty;
+        [ObservableProperty]
+        private string productAddres = string.Empty;
+        [ObservableProperty]
+        private string productStatus = string.Empty;
+
+
+        [RelayCommand]
+        private async Task LoadProducts()
         {
-            _currentId = 6;
-            _allproducts = new List<Product>
-            {
-                new Product { Id = 1,Name = "Laptop", Category = "Electronics", Price = 999.99m, Status = true, Addres = "Rd.1" , TitleOfStatus = "есть"},
-                new Product { Id = 2,Name = "Smartphone", Category = "Electronics", Price = 499.99m, Status = true, Addres = "Rd.2", TitleOfStatus = "есть" },
-                new Product { Id = 3,Name = "Table", Category = "Furniture", Price = 199.99m, Status = false, Addres = "Rd.3",TitleOfStatus = "нет"  },
-                new Product { Id = 4,Name = "Chair", Category = "Furniture", Price = 89.99m, Status = true, Addres = "Rd.4",TitleOfStatus = "есть"  },
-                new Product { Id = 5,Name = "Headphones", Category = "Electronics", Price = 199.99m , Status = false, Addres = "Rd.5",TitleOfStatus = "нет" },
-                new Product { Id = 6,Name = "Sofa", Category = "Furniture", Price = 899.99m, Status = true, Addres = "Rd.6", TitleOfStatus = "есть"  }
-                
-            };
+            await using var db = new AppDbContext();
+
+            var products = await db.Products
+                .AsNoTracking()
+                .ToListAsync();
+
             Products.Clear();
-            foreach (var product in _allproducts)
+
+            foreach (var product in products)
             {
                 Products.Add(product);
             }
@@ -241,37 +262,37 @@ namespace test2.ViewModels
         [ObservableProperty]
         private string newtitleOfStatus = "";
         [RelayCommand]
-        private void AddProduct()
+        private async Task AddProduct()
         {
-            if (NewProductStatus == true)
-            {
-                NewtitleOfStatus = "есть";
-            }
-            else
-            {
-                NewtitleOfStatus = "нет";
-            }
-            var newProduct = new Product
-            {
-                Id = _currentId + 1,
-                Name = NewProductName,
-                Category = NewProductCategory,
-                Price = NewProductPrice,
-                Status = NewProductStatus,
-                Addres = NewProductAddress,
-                TitleOfStatus = NewtitleOfStatus,
+
+            if (string.IsNullOrWhiteSpace(ProductName))
+                return;
+
+            await using var db = new AppDbContext();
+
+            var product = new Product
+            {   Id = ProductId, 
+                Name = ProductName,
+                Category = ProductCategory,
+                Price = ProductPrice,
+                Status = ProductStatus,
+                Addres = ProductAddres,
+                TitleOfStatus = ProductTittleOfStatus
             };
 
+            db.Products.Add(product);
+            await db.SaveChangesAsync();
 
-            Products.Add(newProduct);
-            _allproducts.Add(newProduct);
-            _currentId = _currentId +1;
-            NewProductName = "";
-            NewProductCategory = "";
-            NewProductPrice = 0;
-            NewProductStatus = false;
-            NewProductAddress = "";
-            NewtitleOfStatus = "";
+            Products.Add(product);
+
+            ProductName = string.Empty;
+            ProductPrice = 0;
+            ProductStatus = string.Empty;
+            ProductAddres = string.Empty;
+            ProductId = 1;
+            ProductCategory = string.Empty;
+            ProductTittleOfStatus = string.Empty;
+
         }
 
     }

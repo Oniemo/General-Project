@@ -53,21 +53,21 @@
             <Grid ColumnDefinitions="2*,2*,*,2*,Auto" ColumnSpacing="10">
 
                 <TextBox Grid.Column="0"
-                         Text="{Binding NewProductName}"
+                         Text="{Binding ProductName}"
                          Watermark="Название продукта" />
                 <TextBox Grid.Column="1"
-                         Text="{Binding NewProductCategory}"
+                         Text="{Binding ProductCategory}"
                          Watermark="Категория" />
                 <TextBox Grid.Column="2"
-                         Text="{Binding NewProductPrice}"
+                         Text="{Binding ProductPrice}"
                          Watermark="Цена" />
                 <TextBox Grid.Column="3"
-                         Text="{Binding NewProductAddress}"
+                         Text="{Binding ProductAddres}"
                          Watermark="Адрес" />
                 <StackPanel Grid.Column="4" Orientation="Horizontal" Spacing="10">
-                    <CheckBox IsChecked="{Binding NewProductStatus}"
-                              VerticalAlignment="Center"
-                              Content="В наличии" />
+                    <TextBox Grid.Column="4"
+                         Text="{Binding ProductStatus}"
+                         Watermark="Статус" />
                     <Button Command="{Binding AddProductCommand}"
                             Content="Добавить" />
                 </StackPanel>
@@ -98,7 +98,7 @@
                                     <TextBlock Grid.Column="2" Text="{Binding Category}" />
                                     <TextBlock Grid.Column="3" Text="{Binding Price, StringFormat='{}{0:F2}'}" />
                                     <TextBlock Grid.Column="4" Text="{Binding Addres}" />
-                                    <TextBlock Grid.Column="5" Text="{Binding TitleOfStatus}" />
+                                    <TextBlock Grid.Column="5" Text="{Binding Status}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
